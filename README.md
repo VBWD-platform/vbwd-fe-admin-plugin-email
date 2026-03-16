@@ -98,6 +98,16 @@ npx vitest run plugins/email-admin --reporter=verbose
 
 ---
 
+## Related
+
+| | Repository |
+|-|------------|
+| 🖥 Backend | [vbwd-plugin-email](https://github.com/VBWD-platform/vbwd-plugin-email) |
+
+**Core:** [vbwd-fe-admin](https://github.com/VBWD-platform/vbwd-fe-admin) · [vbwd-fe-core](https://github.com/VBWD-platform/vbwd-fe-core)
+
+---
+
 ## License
 
 CC0 1.0 Universal (Public Domain)
