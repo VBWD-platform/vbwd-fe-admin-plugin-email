@@ -110,4 +110,4 @@ npx vitest run plugins/email-admin --reporter=verbose
 
 ## License
 
-CC0 1.0 Universal (Public Domain)
+BSL 1.1 (Business Source Licence)
