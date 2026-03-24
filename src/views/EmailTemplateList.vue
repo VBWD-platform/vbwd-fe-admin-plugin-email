@@ -10,6 +10,19 @@
           class="cms-list__search"
         >
         <button
+          class="btn btn--secondary"
+          @click="triggerImport"
+        >
+          {{ $t('email.import') }}
+        </button>
+        <input
+          ref="importFileInput"
+          type="file"
+          accept=".json"
+          style="display: none"
+          @change="handleImport"
+        >
+        <button
           class="btn btn--primary"
           @click="$router.push('/admin/email/templates/new')"
         >
@@ -154,6 +167,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, reactive } from 'vue'
+import { api } from '@/api'
 import { useEmailStore } from '../stores/useEmailStore'
 import type { EmailTemplate } from '../stores/useEmailStore'
 
@@ -226,6 +240,29 @@ function exportSelected() {
 function formatDate(iso: string): string {
   if (!iso) return '—'
   return new Date(iso).toLocaleDateString()
+}
+
+const importFileInput = ref<HTMLInputElement | null>(null)
+
+function triggerImport() {
+  importFileInput.value?.click()
+}
+
+async function handleImport(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+
+  try {
+    const text = await file.text()
+    const data = JSON.parse(text)
+    const templates = Array.isArray(data) ? data : [data]
+    await api.post('/admin/email/templates/import', templates)
+    await store.fetchTemplates()
+  } catch {
+    alert('Import failed — invalid JSON file')
+  }
+
+  if (importFileInput.value) importFileInput.value.value = ''
 }
 
 onMounted(() => { store.fetchTemplates() })
