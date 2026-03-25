@@ -27,6 +27,7 @@ function mountList(storeOverrides = {}) {
   return mount(EmailTemplateList, {
     global: {
       stubs: { RouterLink: mockRouterLink },
+      mocks: { $t: (key: string) => key },
     },
   })
 }
@@ -39,13 +40,13 @@ describe('EmailTemplateList', () => {
   it('calls fetchTemplates on mount', () => {
     const store = { templates: [], loading: false, error: null, fetchTemplates: vi.fn() }
     vi.mocked(useEmailStore).mockReturnValue(store as never)
-    mount(EmailTemplateList, { global: { stubs: { RouterLink: mockRouterLink } } })
+    mount(EmailTemplateList, { global: { stubs: { RouterLink: mockRouterLink }, mocks: { $t: (key: string) => key } } })
     expect(store.fetchTemplates).toHaveBeenCalledOnce()
   })
 
   it('shows loading state', () => {
     const wrapper = mountList({ loading: true })
-    expect(wrapper.text()).toContain('Loading')
+    expect(wrapper.text()).toContain('email.loading')
   })
 
   it('shows error state', () => {
@@ -55,7 +56,7 @@ describe('EmailTemplateList', () => {
 
   it('shows empty state when no templates', () => {
     const wrapper = mountList({ templates: [] })
-    expect(wrapper.text()).toContain('No templates found')
+    expect(wrapper.text()).toContain('email.no_templates_seed')
   })
 
   it('renders template rows', () => {
@@ -72,7 +73,7 @@ describe('EmailTemplateList', () => {
     })
     expect(wrapper.text()).toContain('subscription.activated')
     expect(wrapper.text()).toContain('Hello {{ user_name }}')
-    expect(wrapper.text()).toContain('Active')
+    expect(wrapper.text()).toContain('email.is_active')
   })
 
   it('shows inactive badge for inactive template', () => {
@@ -87,6 +88,6 @@ describe('EmailTemplateList', () => {
         },
       ],
     })
-    expect(wrapper.text()).toContain('Inactive')
+    expect(wrapper.text()).toContain('email.inactive')
   })
 })
