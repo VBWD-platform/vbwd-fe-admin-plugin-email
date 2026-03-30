@@ -1,0 +1,12 @@
+{
+  "tabs": [
+    {
+      "id": "display",
+      "label": "Display",
+      "fields": [
+        { "key": "templates_per_page", "label": "Templates Per Page", "component": "input", "inputType": "number", "min": 10, "max": 100 },
+        { "key": "show_event_type_column", "label": "Show Event Type Column", "component": "checkbox" }
+      ]
+    }
+  ]
+}
