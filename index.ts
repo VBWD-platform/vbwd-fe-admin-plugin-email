@@ -25,7 +25,7 @@ const SETTINGS_ITEMS = [
 
 export const emailAdminPlugin: IPlugin = {
   name: 'email-admin',
-  version: '26.6',
+  version: '26.6.1',
   description: 'Transactional email template editor',
 
   install(sdk: IPlatformSDK) {
